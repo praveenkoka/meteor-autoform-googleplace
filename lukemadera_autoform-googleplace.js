@@ -17,6 +17,10 @@ var afGooglePlace ={
     var loc ={
       lat: '',
       lng: '',
+      geometry: {
+        type: "Point",
+        coordinates: [ 0,0 ]
+      },
       fullAddress: val,
       street: '',
       city: '',
@@ -27,9 +31,12 @@ var afGooglePlace ={
     
     if(place && place.geometry && place.geometry.location) {
       loc =self.parseGoogleAddressComponent(place.address_components, {});
+      
+      loc.geometry = {
+        type: "Point",
+        coordinates: [ place.geometry.location.lng(), place.geometry.location.lat() ]
+      };
 
-      loc.lat =place.geometry.location.lat();
-      loc.lng =place.geometry.location.lng();
       loc.fullAddress =(place.formatted_address) ? place.formatted_address : "";
     }
 
